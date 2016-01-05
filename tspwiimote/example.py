@@ -21,7 +21,7 @@ import time
 
 #connecting to the Wiimote. This allows several attempts
 # as first few often fail.
-print 'Press 1+2 on your Wiimote now...'
+print('Press 1+2 on your Wiimote now...')
 wm = None
 i=2
 while not wm:
@@ -32,7 +32,7 @@ while not wm:
             quit()
             break
         print(format("Error opening wiimote connection, attempt: {0}", str(i)))
-        i +=1
+        i += 1
 
 # set Wiimote to report button presses and accelerometer state
 wm.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
