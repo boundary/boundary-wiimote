@@ -17,7 +17,7 @@
 
 import cwiid
 import time
-import i2c
+# import i2c
 
 #connecting to the Wiimote. This allows several attempts
 # as first few often fail.
@@ -31,7 +31,7 @@ while not wm:
         if (i>10):
             quit()
             break
-        print(format("Error opening wiimote connection, attempt: {0}", i))
+        print(format("Error opening wiimote connection, attempt: {0}", str(i)))
         i +=1
 
 # set Wiimote to report button presses and accelerometer state
