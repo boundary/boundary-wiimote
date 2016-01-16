@@ -1,6 +1,6 @@
 {
    "WIIMOTE_BATTERY": {
-     "displayName": "Wiimote Battery X",
+     "displayName": "Wiimote Battery",
      "displayNameShort": "Wii Bat.",
      "description": "Wiimote current battery status",
      "unit": "percent",
@@ -80,18 +80,10 @@
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_2": {
+
      "displayName": "Wiimote Button 2",
      "displayNameShort": "Wii 2",
      "description": "Wiimote button 2 status",
-     "unit": "number",
-     "defaultAggregate": "avg",
-     "defaultResolutionMS": 1000
-   },
-   "WIIMOTE_BUTTON_2": {
-
-     "displayName": "Wiimote Button 1",
-     "displayNameShort": "Wii 1",
-     "description": "Wiimote button 1 status",
      "unit": "number",
      "defaultAggregate": "avg",
      "defaultResolutionMS": 1000
@@ -138,7 +130,7 @@
    },
    "WIIMOTE_BUTTON": {
      "displayName": "Wiimote Button Plus",
-     "displayNameShort": "Wii Plus",
+     "displayNameShort": "Wii Button",
      "description": "Wiimote button Plus status",
      "unit": "number",
      "defaultAggregate": "avg",

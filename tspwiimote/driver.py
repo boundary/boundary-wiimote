@@ -24,13 +24,13 @@ class Driver(object):
     def __init__(self):
         self.wm = None
         self.api = API()
-        self.button_delay = 0.1
+        self.button_delay = 0.01
+        self._position = 0
 
-    def send_measurement(self):
-        metric_id = 'CPU'
-        value = 0.75
-        source = 'WIIMOTE_TEST_SOURCE'
-        timestamp = datetime.now().strftime('%s')
+    def send_measurement(self, metric_id, value, source, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().strftime('%s')
+        timestamp = int(timestamp)
         self.api.measurement_create(metric_id, value, source, timestamp)
 
     def connect(self, retries=10):
@@ -63,7 +63,7 @@ class Driver(object):
             self.button_right()
 
         if buttons & cwiid.BTN_UP:
-            self.button_down()
+            self.button_up()
 
         if buttons & cwiid.BTN_DOWN:
             self.button_down()
@@ -92,10 +92,17 @@ class Driver(object):
     def loop(self):
         while True:
             buttons = self.wm.state['buttons']
-	    print(self.wm.state['acc'])
+	    #print(self.wm.state['acc'])
             self.dispatch(buttons)
-	    sleep(0.25)
-            self.send_measurement()
+	    #sleep(0.25)
+	    acc = self.wm.state['acc']
+            self.send_measurement('WIIMOTE_ACC_X', acc[0], 'X')
+            self.send_measurement('WIIMOTE_ACC_Y', acc[1], 'Y')
+            self.send_measurement('WIIMOTE_ACC_Z', acc[2], 'Z')
+	    #self.send_measurement('WIIMOTE_PILOT_POSITION', self._position, 'position');
+	    self.send_measurement('WIIMOTE_ACCELEROMETER', acc[0], 'X');
+	    self.send_measurement('WIIMOTE_ACCELEROMETER', acc[1], 'Y');
+	    self.send_measurement('WIIMOTE_ACCELEROMETER', acc[2], 'Z');
 
     def message_loop(self):
 	while True:
@@ -119,11 +126,13 @@ class Driver(object):
 
     def button_up(self):
         print('Up pressed')
-        sleep(self.button_delay)
+        self._position += 1
+        #sleep(self.button_delay)
 
     def button_down(self):
         print('Down pressed')
-        sleep(self.button_delay)
+        self._position -= 1
+        #sleep(self.button_delay)
 
     def button_1(self):
         print('Button 1 pressed')
@@ -135,7 +144,7 @@ class Driver(object):
 
     def button_a(self):
         print('Button A pressed')
-        sleep(self.button_delay)
+	self.send_measurement('WIIMOTE_BUTTON_A', 1, 'ButtonA');
 
     def button_b(self):
         print('Button B pressed')
