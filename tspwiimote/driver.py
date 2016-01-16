@@ -32,7 +32,7 @@ class Driver(object):
         """
         print('Press 1+2 on your Wiimote now...')
         i = 1
-        while self.wm is not None:
+        while self.wm is None:
             try:
                 self.wm = cwiid.Wiimote()
             except RuntimeError:
@@ -40,6 +40,7 @@ class Driver(object):
                     quit()
             print(format("Error opening wiimote connection, attempt: {0}", str(i)))
             i += 1
+        self.wm.rpt_mode = cwiid.RPT_BTN
 
     def dispatch(self, buttons):
 
