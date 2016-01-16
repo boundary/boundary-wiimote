@@ -40,9 +40,12 @@ class Driver(object):
                     quit()
             print(format("Error opening wiimote connection, attempt: {0}", str(i)))
             i += 1
-        self.wm.rpt_mode = cwiid.RPT_BTN
+        self.wm.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC | cwiid.RPT_IR | cwiid.RPT_STATUS
 
     def dispatch(self, buttons):
+
+        if buttons & cwiid.BTN_LEFT:
+            self.button_left()
 
         if buttons & cwiid.BTN_LEFT:
             self.button_left()
@@ -80,8 +83,21 @@ class Driver(object):
     def loop(self):
         while True:
             buttons = self.wm.state['buttons']
+	    print(self.wm.state['acc'])
             self.dispatch(buttons)
-            sleep(1)
+	    sleep(0.25)
+
+    def message_loop(self):
+	while True:
+           sleep(0.01)
+           messages = self.wm.get_mesg()   
+           for msg in messages:
+               if mesg[0] == cwiid.MESG_ACC: # If a accelerometer message
+                   print(msg[1][cwiid.X])
+                   print(msg[1][cwiid.Y])
+                   print(msg[1][cwiid.Z])
+               elif msg[0] == cwiid.MESG_BTN:
+                   print(wiimote.state)
 
     def button_left(self):
         print('Left pressed')
@@ -130,6 +146,7 @@ class Driver(object):
     def run(self):
         self.connect()
         self.loop()
+        #self.message_loop()
 
 
 if __name__ == '__main__':
