@@ -32,7 +32,7 @@ class Driver(object):
         """
         print('Press 1+2 on your Wiimote now...')
         i = 1
-        while not self.wm:
+        while self.wm is not None:
             try:
                 self.wm = cwiid.Wiimote()
             except RuntimeError:
