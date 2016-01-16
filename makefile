@@ -5,7 +5,7 @@ TAR_FILE=dist/$(TARGET)-$(VERSION).tar.gz
 install: build
 	pip install $(TAR_FILE)
 
-build:
+build: doc
 	python setup.py sdist
 
 doc:
@@ -13,7 +13,7 @@ doc:
 
 rebuild: clean install
 
-upload:
+upload: doc
 	python setup.py sdist upload
 	
 clean:
