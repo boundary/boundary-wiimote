@@ -27,11 +27,13 @@ class Driver(object):
         self.button_delay = 0.01
         self._position = 0
 
-    def send_measurement(self, metric_id, value, source, timestamp=None):
+    def queue_measurement(self, metric_id, value, source, timestamp=None):
         if timestamp is None:
             timestamp = datetime.now().strftime('%s')
         timestamp = int(timestamp)
         self.api.measurement_create(metric_id, value, source, timestamp)
+    def send_measurements(self):
+        pass
 
     def connect(self, retries=10):
         """
@@ -45,122 +47,68 @@ class Driver(object):
             try:
                 self.wm = cwiid.Wiimote()
             except RuntimeError:
+                print("Error opening wiimote connection, attempt: {0}".format(str(i)))
+                i += 1
                 if i > retries:
                     quit()
-            print(format("Error opening wiimote connection, attempt: {0}", str(i)))
-            i += 1
-        self.wm.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC | cwiid.RPT_IR | cwiid.RPT_STATUS
+        self.wm.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC | cwiid.RPT_STATUS
+        print("connected!")
 
-    def dispatch(self, buttons):
+    def collect_battery_status(self):
+	battery = float(self.wm.state['battery'])/100.0
+        self.queue_measurement('WIIMOTE_BATTERY_STATUS', battery, 'Battery')
 
-        if buttons & cwiid.BTN_LEFT:
-            self.button_left()
+    def collect_button_status(self):
 
-        if buttons & cwiid.BTN_LEFT:
-            self.button_left()
+        buttons = self.wm.state['buttons']
 
-        if buttons & cwiid.BTN_RIGHT:
-            self.button_right()
+        self.queue_measurement('WIIMOTE_BUTTON_LEFT', 1 if buttons & cwiid.BTN_LEFT else 0, 'ButtonLeft')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_UP else 0, 'ButtonLeft')
 
-        if buttons & cwiid.BTN_UP:
-            self.button_up()
+        self.queue_measurement('WIIMOTE_BUTTON_RIGHT', 1 if buttons & cwiid.BTN_RIGHT else 0, 'ButtonRight')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_RIGHT else 0, 'ButtonRight')
 
-        if buttons & cwiid.BTN_DOWN:
-            self.button_down()
+        self.queue_measurement('WIIMOTE_BUTTON_UP', 1 if buttons & cwiid.BTN_UP else 0, 'ButtonUp')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_UP else 0, 'ButtonUp')
 
-        if buttons & cwiid.BTN_1:
-            self.button_1()
+        self.queue_measurement('WIIMOTE_BUTTON_DOWN', 1 if buttons & cwiid.BTN_DOWN else 0, 'ButtonDown')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_1 else 0, 'ButtonDown')
 
-        if buttons & cwiid.BTN_2:
-            self.button_2()
+        self.queue_measurement('WIIMOTE_BUTTON_1', 1 if buttons & cwiid.BTN_1 else 0, 'Button1')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_1 else 0, 'Button1')
 
-        if buttons & cwiid.BTN_A:
-            self.button_a()
+        self.queue_measurement('WIIMOTE_BUTTON_2', 1 if buttons & cwiid.BTN_2 else 0, 'Button2')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_2 else 0, 'Button2')
 
-        if buttons & cwiid.BTN_B:
-            self.button_b()
+        self.queue_measurement('WIIMOTE_BUTTON_A', 1 if buttons & cwiid.BTN_A else 0, 'ButtonA')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_A else 0, 'ButtonA')
 
-        if buttons & cwiid.BTN_HOME:
-            self.button_home()
+        self.queue_measurement('WIIMOTE_BUTTON_B', 1 if buttons & cwiid.BTN_B else 0, 'ButtonB')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_B else 0, 'ButtonB')
 
-        if buttons & cwiid.BTN_MINUS:
-            self.button_minus()
+        self.queue_measurement('WIIMOTE_BUTTON_HOME', 1 if buttons & cwiid.BTN_HOME else 0, 'ButtonHome')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_HOME else 0, 'ButtonHome')
 
-        if buttons & cwiid.BTN_PLUS:
-            self.button_plus()
+        self.queue_measurement('WIIMOTE_BUTTON_MINUS', 1 if buttons & cwiid.BTN_MINUS else 0, 'ButtonMinus')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_MINUS else 0, 'ButtonMinus')
+
+        self.queue_measurement('WIIMOTE_BUTTON_PLUS', 1 if buttons & cwiid.BTN_PLUS else 0, 'ButtonPlus')
+        self.queue_measurement('WIIMOTE_BUTTON', 1 if buttons & cwiid.BTN_PLUS else 0, 'ButtonPlus')
+
+    def collect_accelerator_status(self):
+	acc = self.wm.state['acc']
+        self.queue_measurement('WIIMOTE_ACC_X', acc[0], 'X')
+        self.queue_measurement('WIIMOTE_ACC_Y', acc[1], 'Y')
+        self.queue_measurement('WIIMOTE_ACC_Z', acc[2], 'Z')
+	self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[0], 'X');
+	self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[1], 'Y');
+	self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[2], 'Z');
 
     def loop(self):
         while True:
-            buttons = self.wm.state['buttons']
-	    #print(self.wm.state['acc'])
-            self.dispatch(buttons)
-	    #sleep(0.25)
-	    acc = self.wm.state['acc']
-            self.send_measurement('WIIMOTE_ACC_X', acc[0], 'X')
-            self.send_measurement('WIIMOTE_ACC_Y', acc[1], 'Y')
-            self.send_measurement('WIIMOTE_ACC_Z', acc[2], 'Z')
-	    #self.send_measurement('WIIMOTE_PILOT_POSITION', self._position, 'position');
-	    self.send_measurement('WIIMOTE_ACCELEROMETER', acc[0], 'X');
-	    self.send_measurement('WIIMOTE_ACCELEROMETER', acc[1], 'Y');
-	    self.send_measurement('WIIMOTE_ACCELEROMETER', acc[2], 'Z');
-
-    def message_loop(self):
-	while True:
-           sleep(0.01)
-           messages = self.wm.get_mesg()   
-           for msg in messages:
-               if mesg[0] == cwiid.MESG_ACC: # If a accelerometer message
-                   print(msg[1][cwiid.X])
-                   print(msg[1][cwiid.Y])
-                   print(msg[1][cwiid.Z])
-               elif msg[0] == cwiid.MESG_BTN:
-                   print(wiimote.state)
-
-    def button_left(self):
-        print('Left pressed')
-        sleep(self.button_delay)
-
-    def button_right(self):
-        print('Right pressed')
-        sleep(self.button_delay)
-
-    def button_up(self):
-        print('Up pressed')
-        self._position += 1
-        #sleep(self.button_delay)
-
-    def button_down(self):
-        print('Down pressed')
-        self._position -= 1
-        #sleep(self.button_delay)
-
-    def button_1(self):
-        print('Button 1 pressed')
-        sleep(self.button_delay)
-
-    def button_2(self):
-        print('Button 2 pressed')
-        sleep(self.button_delay)
-
-    def button_a(self):
-        print('Button A pressed')
-	self.send_measurement('WIIMOTE_BUTTON_A', 1, 'ButtonA');
-
-    def button_b(self):
-        print('Button B pressed')
-        sleep(self.button_delay)
-
-    def button_home(self):
-        print('Home Button pressed')
-        sleep(self.button_delay)
-
-    def button_minus(self):
-        print('Minus Button pressed')
-        sleep(self.button_delay)
-
-    def button_plus(self):
-        print('Plus Button pressed')
-        sleep(self.button_delay)
+            self.collect_battery_status()
+            self.collect_button_status()
+            self.collect_accelerator_status()
 
     def run(self):
         self.connect()
