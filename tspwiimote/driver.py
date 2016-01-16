@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2015 BMC Software, Inc.
+# Copyright 2016 BMC Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +16,22 @@
 #
 import cwiid
 from time import sleep
-
+from datetime import datetime
+from tspapi import API
 
 class Driver(object):
 
     def __init__(self):
         self.wm = None
+        self.api = API()
         self.button_delay = 0.1
+
+    def send_measurement(self):
+        metric_id = 'CPU'
+        value = 0.75
+        source = 'WIIMOTE_TEST_SOURCE'
+        timestamp = datetime.now().strftime('%s')
+        self.api.measurement_create(metric_id, value, source, timestamp)
 
     def connect(self, retries=10):
         """
@@ -86,6 +95,7 @@ class Driver(object):
 	    print(self.wm.state['acc'])
             self.dispatch(buttons)
 	    sleep(0.25)
+            self.send_measurement()
 
     def message_loop(self):
 	while True:
@@ -146,7 +156,6 @@ class Driver(object):
     def run(self):
         self.connect()
         self.loop()
-        #self.message_loop()
 
 
 if __name__ == '__main__':
