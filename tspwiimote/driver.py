@@ -21,9 +21,9 @@ from tspapi import API
 
 class Driver(object):
 
-    def __init__(self, email, api_token):
+    def __init__(self, email=None, api_token=None):
         self._wm = None
-        self._api = API(email=email, api_token)
+        self._api = API(email=email, api_token=api_token)
         self._buttons = None
         self._position = 0
 
@@ -59,12 +59,12 @@ class Driver(object):
 	battery = float(self._wm.state['battery'])/100.0
         self.queue_measurement('WIIMOTE_BATTERY_STATUS', battery, 'Battery')
 
-    def button_status(self, button)
+    def button_status(self, button):
         return 1 if self._buttons & button else 0
 
     def collect_button_status(self):
 
-        self._buttons = self.wm.state['buttons']
+        self._buttons = self._wm.state['buttons']
         
         button_left = self.button_status(cwiid.BTN_LEFT) 
         self.queue_measurement('WIIMOTE_BUTTON_LEFT', button_left, 'button-left')
@@ -106,7 +106,7 @@ class Driver(object):
         self.queue_measurement('WIIMOTE_BUTTON_MINUS', button_minus, 'button-minus')
         self.queue_measurement('WIIMOTE_BUTTON', button_minus, 'button-minus')
 
-        button_plus = self.button_status(cwiid.BTN_MINUS) 
+        button_plus = self.button_status(cwiid.BTN_PLUS) 
         self.queue_measurement('WIIMOTE_BUTTON_PLUS', button_plus, 'button-plus')
         self.queue_measurement('WIIMOTE_BUTTON', button_plus, 'button-plus')
 
