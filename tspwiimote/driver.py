@@ -18,6 +18,7 @@ import cwiid
 from datetime import datetime
 from tspapi import API
 from tspapi import Measurement
+import logging
 
 
 class Driver(object):
@@ -33,6 +34,7 @@ class Driver(object):
         self._measurements.append(Measurement(metric=metric, value=value, source=source, timestamp=self._timestamp))
 
     def send_measurements(self):
+        logging.debug('send measurements')
         self._api.measurement_create_batch(self._measurements)
 
     def connect(self, retries=10):
@@ -47,7 +49,7 @@ class Driver(object):
             try:
                 self._wm = cwiid.Wiimote()
             except RuntimeError:
-                print("Error opening wiimote connection, attempt: {0}".format(str(i)))
+                logging.error("Error opening wiimote connection, attempt: {0}".format(str(i)))
                 i += 1
                 if i > retries:
                     raise RuntimeError
@@ -58,6 +60,7 @@ class Driver(object):
         return 1 if self._buttons & button else 0
 
     def collect_init(self):
+
         # Initialze the array to hold the collected measurements
         self._measurements = []
 
@@ -127,11 +130,13 @@ class Driver(object):
         self.queue_measurement('WIIMOTE_ACCELEROMETER', self._accelerometers[2], 'accelerometer-z');
 
     def collection_loop(self):
+        logging.debug("start collection loop")
         while True:
             self.collect_init()
             self.collect_battery_status()
             self.collect_button_status()
             self.collect_accelerator_status()
+            self.send_measurements()
 
     def run(self):
         self.connect()
