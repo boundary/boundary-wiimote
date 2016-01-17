@@ -57,7 +57,7 @@ class Driver(object):
 
     def collect_battery_status(self):
         battery = float(self._wm.state['battery']) / 100.0
-        self.queue_measurement('WIIMOTE_BATTERY_STATUS', battery, 'Battery')
+        self.queue_measurement('WIIMOTE_BATTERY', battery, 'battery')
 
     def button_status(self, button):
         return 1 if self._buttons & button else 0
