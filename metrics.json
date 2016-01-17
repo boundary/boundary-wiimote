@@ -135,13 +135,5 @@
      "unit": "number",
      "defaultAggregate": "avg",
      "defaultResolutionMS": 1000
-   },
-   "WIIMOTE_POSITION": {
-     "displayName": "Position",
-     "displayNameShort": "Pos",
-     "description": "Current position",
-     "unit": "number",
-     "defaultAggregate": "avg",
-     "defaultResolutionMS": 1000
    }
 }
