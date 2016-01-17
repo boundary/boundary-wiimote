@@ -112,12 +112,12 @@ class Driver(object):
 
     def collect_accelerator_status(self):
         acc = self._wm.state['acc']
-        self.queue_measurement('WIIMOTE_ACCELEROMETER_X', acc[0], 'accelerator-x')
-        self.queue_measurement('WIIMOTE_ACCELEROMETER_Y', acc[1], 'accelerator-y')
-        self.queue_measurement('WIIMOTE_ACCELEROMETER_Z', acc[2], 'accelerator-z')
-        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[0], 'accelerator-x');
-        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[1], 'accelerator-y');
-        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[2], 'accelerator-z');
+        self.queue_measurement('WIIMOTE_ACCELEROMETER_X', acc[0], 'accelerometer-x')
+        self.queue_measurement('WIIMOTE_ACCELEROMETER_Y', acc[1], 'accelerometer-y')
+        self.queue_measurement('WIIMOTE_ACCELEROMETER_Z', acc[2], 'accelerometer-z')
+        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[0], 'accelerometer-x');
+        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[1], 'accelerometer-y');
+        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[2], 'accelerometer-z');
 
     def loop(self):
         while True:
