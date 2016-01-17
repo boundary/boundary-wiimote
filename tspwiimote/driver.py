@@ -30,7 +30,7 @@ class Driver(object):
         self._timestamp = None
 
     def queue_measurement(self, metric, value, source):
-        self._measurements.append(Measurement(metric=metric, value=value, source=source, timestamp=self._timestamp)
+        self._measurements.append(Measurement(metric=metric, value=value, source=source, timestamp=self._timestamp))
 
     def send_measurements(self):
         self._api.measurement_create_batch(self._measurements)
