@@ -16,6 +16,6 @@ setup(
     description='Example of integrating a Wiimote/Raspberry Pi to TrueSight Pulse',
     long_description=open('README.txt').read(),
     install_requires=[
-        "tspapi >=0.1.1",
+        "tspapi >=0.1.2",
     ],
 )
