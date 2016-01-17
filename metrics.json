@@ -7,7 +7,7 @@
      "defaultAggregate": "avg",
      "defaultResolutionMS": 1000
    },
-   "WIIMOTE_ACC_X": {
+   "WIIMOTE_ACCELEROMETER_X": {
      "displayName": "Wiimote Accelerometer X",
      "displayNameShort": "Wii X",
      "description": "Wiimote accelerometer X value",
@@ -15,7 +15,7 @@
      "defaultAggregate": "avg",
      "defaultResolutionMS": 1000
    },
-   "WIIMOTE_ACC_Y": {
+   "WIIMOTE_ACCELEROMETER_Y": {
      "displayName": "Wiimote Accelerometer Y",
      "displayNameShort": "Wii Y",
      "description": "Wiimote accelerometer Y value",
@@ -23,7 +23,7 @@
      "defaultAggregate": "avg",
      "defaultResolutionMS": 1000
    },
-   "WIIMOTE_ACC_Z": {
+   "WIIMOTE_ACCELEROMETER_Z": {
      "displayName": "Wiimote Accelerometer Z",
      "displayNameShort": "Wii Z",
      "description": "Wiimote accelerometer Z value",
