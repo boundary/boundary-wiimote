@@ -23,10 +23,10 @@ class CLI(object):
         self._email = None
         self._api_token = None
         self._product_name = "TrueSight Pulse"
-        self._description = "command line tool for integrating {0} and WiiMote/Raspberry Pi".format(self._product_name)
+        self._description = "Command line tool for integrating {0} and WiiMote/Raspberry Pi".format(self._product_name)
 
     def _parse_arguments(self):
-        parser = argparse.ArgumentParser(description=self._product_name)
+        parser = argparse.ArgumentParser(description=self._description)
         parser.add_argument('-e', '--email', dest='email', action='store', metavar="e_mail",
                             help='e-mail that has access to the {0} account'.format(self._product_name))
         parser.add_argument('-t', '--api-token', dest='api_token', action='store', metavar="api_token",
