@@ -2,7 +2,7 @@
 
 # Define read-only constants
 typeset -r HOSTGROUP_NAME="WiiMote"
-typeset -r HOSTGROUP_SOURCES="accelerometer-x,accelerometer-y,accelerometer-z,button-a,button-b,button-up,button-down,button-right,button-left,button-1,button-2,button-plus,button-minus,button-home,position,battery"
+typeset -r HOSTGROUP_SOURCES="accelerometer-x,accelerometer-y,accelerometer-z,button-a,button-b,button-up,button-down,button-right,button-left,button-1,button-2,button-plus,button-minus,button-home,battery"
 
 #
 # Helper function to test for a command
