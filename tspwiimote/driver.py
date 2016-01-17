@@ -18,6 +18,7 @@ import cwiid
 from time import sleep
 from datetime import datetime
 from tspapi import API
+from tspapi import Measurement
 
 
 class Driver(object):
@@ -25,21 +26,19 @@ class Driver(object):
         self._wm = None
         self._api = API(email=email, api_token=api_token)
         self._buttons = None
-        self._position = 0
+        self._accelerometers = None
+        self._measurements = None
 
-    def queue_measurement(self, metric_id, value, source, timestamp=None):
-        if timestamp is None:
-            timestamp = datetime.now().strftime('%s')
-        timestamp = int(timestamp)
-        self._api.measurement_create(metric_id, value, source, timestamp)
+    def queue_measurement(self, metric, value, source):
+        self._measurements.append(Measurement(metric=metric, value=value, source=source, timestamp=self._timestamp)
 
     def send_measurements(self):
-        pass
+        self._api.measurement_create_batch(self._measurements)
 
     def connect(self, retries=10):
         """
         Attempt to connect to the Wiimote
-        :param retries:
+        :param retries: Number of times to attempting connection before raising an exception.
         :return:
         """
         print('Press 1+2 on your Wiimote now...')
@@ -51,20 +50,29 @@ class Driver(object):
                 print("Error opening wiimote connection, attempt: {0}".format(str(i)))
                 i += 1
                 if i > retries:
-                    quit()
+                    raise RuntimeError
         self._wm.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC | cwiid.RPT_STATUS
         print("connected!")
-
-    def collect_battery_status(self):
-        battery = float(self._wm.state['battery']) / 100.0
-        self.queue_measurement('WIIMOTE_BATTERY', battery, 'battery')
 
     def button_status(self, button):
         return 1 if self._buttons & button else 0
 
-    def collect_button_status(self):
+    def collect_init(self):
+        " Initialze the array to hold the collected measurements
+        self._measurements = []
 
+        # Get the current time and use for all measurements
+        self._timestamp = int(datetime.now().strftime('%s'))
+
+        # Snapshot the current state of buttons and accelerometers
         self._buttons = self._wm.state['buttons']
+        self._accelerometers = self._wm.state['acc']
+        self._battery = self._wm.state['battery']
+
+    def collect_battery_status(self):
+        self.queue_measurement('WIIMOTE_BATTERY', float(self._battery)/100.0, 'battery')
+
+    def collect_button_status(self):
 
         button_left = self.button_status(cwiid.BTN_LEFT)
         self.queue_measurement('WIIMOTE_BUTTON_LEFT', button_left, 'button-left')
@@ -111,20 +119,20 @@ class Driver(object):
         self.queue_measurement('WIIMOTE_BUTTON', button_plus, 'button-plus')
 
     def collect_accelerator_status(self):
-        acc = self._wm.state['acc']
-        self.queue_measurement('WIIMOTE_ACCELEROMETER_X', acc[0], 'accelerometer-x')
-        self.queue_measurement('WIIMOTE_ACCELEROMETER_Y', acc[1], 'accelerometer-y')
-        self.queue_measurement('WIIMOTE_ACCELEROMETER_Z', acc[2], 'accelerometer-z')
-        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[0], 'accelerometer-x');
-        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[1], 'accelerometer-y');
-        self.queue_measurement('WIIMOTE_ACCELEROMETER', acc[2], 'accelerometer-z');
+        self.queue_measurement('WIIMOTE_ACCELEROMETER_X', self._accelerometers[0], 'accelerometer-x')
+        self.queue_measurement('WIIMOTE_ACCELEROMETER_Y', self._accelerometers[1], 'accelerometer-y')
+        self.queue_measurement('WIIMOTE_ACCELEROMETER_Z', self._accelerometers[2], 'accelerometer-z')
+        self.queue_measurement('WIIMOTE_ACCELEROMETER', self._accelerometers[0], 'accelerometer-x');
+        self.queue_measurement('WIIMOTE_ACCELEROMETER', self._accelerometers[1], 'accelerometer-y');
+        self.queue_measurement('WIIMOTE_ACCELEROMETER', self._accelerometers[2], 'accelerometer-z');
 
-    def loop(self):
+    def collection_loop(self):
         while True:
+            self.collect_init()
             self.collect_battery_status()
             self.collect_button_status()
             self.collect_accelerator_status()
 
     def run(self):
         self.connect()
-        self.loop()
+        self.collection_loop()
