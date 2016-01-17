@@ -15,7 +15,6 @@
 # limitations under the License.
 #
 import cwiid
-from time import sleep
 from datetime import datetime
 from tspapi import API
 from tspapi import Measurement
@@ -28,6 +27,7 @@ class Driver(object):
         self._buttons = None
         self._accelerometers = None
         self._measurements = None
+        self._timestamp = None
 
     def queue_measurement(self, metric, value, source):
         self._measurements.append(Measurement(metric=metric, value=value, source=source, timestamp=self._timestamp)
@@ -58,7 +58,7 @@ class Driver(object):
         return 1 if self._buttons & button else 0
 
     def collect_init(self):
-        " Initialze the array to hold the collected measurements
+        # Initialze the array to hold the collected measurements
         self._measurements = []
 
         # Get the current time and use for all measurements
