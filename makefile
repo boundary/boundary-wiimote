@@ -17,5 +17,5 @@ upload: doc
 	python setup.py sdist upload
 	
 clean:
-	/bin/rm -rf build dist site MANIFEST
+	/bin/rm -rf build dist site MANIFEST README.txt
 	pip freeze | grep "$(TARGET)==$(VERSION)" && pip uninstall -y $(TARGET)
