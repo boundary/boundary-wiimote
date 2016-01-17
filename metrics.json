@@ -1,0 +1,139 @@
+{
+   "WIIMOTE_BATTERY": {
+     "displayName": "Battery",
+     "displayNameShort": "Wii Bat.",
+     "description": "Wiimote current battery status",
+     "unit": "percent",
+     "defaultAggregate": "avg",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_ACCELEROMETER_X": {
+     "displayName": "Accelerometer X",
+     "displayNameShort": "Wii X",
+     "description": "Wiimote accelerometer X value",
+     "unit": "number",
+     "defaultAggregate": "avg",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_ACCELEROMETER_Y": {
+     "displayName": "Accelerometer Y",
+     "displayNameShort": "Wii Y",
+     "description": "Wiimote accelerometer Y value",
+     "unit": "number",
+     "defaultAggregate": "avg",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_ACCELEROMETER_Z": {
+     "displayName": "Accelerometer Z",
+     "displayNameShort": "Wii Z",
+     "description": "Wiimote accelerometer Z value",
+     "unit": "number",
+     "defaultAggregate": "avg",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_ACCELEROMETER": {
+     "displayName": "Accelerometers",
+     "displayNameShort": "Wii Acc",
+     "description": "Wiimote accelerometer value",
+     "unit": "number",
+     "defaultAggregate": "avg",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_LEFT": {
+     "displayName": "Button Left",
+     "displayNameShort": "Wii Left",
+     "description": "Wiimote button left status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_RIGHT": {
+     "displayName": "Button Right",
+     "displayNameShort": "Wii Right",
+     "description": "Wiimote button Right status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_UP": {
+     "displayName": "Button Up",
+     "displayNameShort": "Wii Up",
+     "description": "Wiimote button Up status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_DOWN": {
+     "displayName": "Button Down",
+     "displayNameShort": "Wii Down",
+     "description": "Wiimote button Down status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_1": {
+     "displayName": "Button 1",
+     "displayNameShort": "Wii 1",
+     "description": "Wiimote button 1 status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_2": {
+
+     "displayName": "Button 2",
+     "displayNameShort": "Wii 2",
+     "description": "Wiimote button 2 status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_A": {
+     "displayName": "Button A",
+     "displayNameShort": "Wii A",
+     "description": "Wiimote button A status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_B": {
+     "displayName": "Button B",
+     "displayNameShort": "Wii B",
+     "description": "Wiimote button B status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_HOME": {
+     "displayName": "Button Home",
+     "displayNameShort": "Wii Home",
+     "description": "Wiimote button Home status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_MINUS": {
+     "displayName": "Button Minus",
+     "displayNameShort": "Wii Minus",
+     "description": "Wiimote button Minus status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON_PLUS": {
+     "displayName": "Button Plus",
+     "displayNameShort": "Wii Plus",
+     "description": "Wiimote button Plus status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   },
+   "WIIMOTE_BUTTON": {
+     "displayName": "Buttons",
+     "displayNameShort": "Wii Button",
+     "description": "Wiimote buttons status",
+     "unit": "number",
+     "defaultAggregate": "max",
+     "defaultResolutionMS": 1000
+   }
+}
