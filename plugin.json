@@ -8,9 +8,9 @@
    "command": "python",
    "metrics": [
      "WIIMOTE_BATTERY",
-     "WIIMOTE_ACC_X",
-     "WIIMOTE_ACC_Y",
-     "WIIMOTE_ACC_Z",
+     "WIIMOTE_ACCELEROMETER_X",
+     "WIIMOTE_ACCELEROMETER_Y",
+     "WIIMOTE_ACCELEROMETER_Z",
      "WIIMOTE_ACCELEROMETER",
      "WIIMOTE_BUTTON_UP",
      "WIIMOTE_BUTTON_LEFT",
