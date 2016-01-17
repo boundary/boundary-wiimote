@@ -17,6 +17,7 @@
 
 from tspwiimote import Driver
 
+
 def main():
     d = Driver()
     d.run() 
