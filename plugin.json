@@ -5,7 +5,7 @@
    "unsupportedPlatforms": [],
    "tags" : "wiimote",
    "description": "Skeleton plugin for installing Dashboards for Pulse WiiMote/Raspberry Pi integration",
-   "command": "",
+   "command": "python",
    "metrics": [
      "WIIMOTE_BATTERY",
      "WIIMOTE_ACC_X",
