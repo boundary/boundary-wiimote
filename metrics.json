@@ -44,7 +44,7 @@
      "displayNameShort": "Wii Left",
      "description": "Wiimote button left status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_RIGHT": {
@@ -52,7 +52,7 @@
      "displayNameShort": "Wii Right",
      "description": "Wiimote button Right status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_UP": {
@@ -60,7 +60,7 @@
      "displayNameShort": "Wii Up",
      "description": "Wiimote button Up status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_DOWN": {
@@ -68,7 +68,7 @@
      "displayNameShort": "Wii Down",
      "description": "Wiimote button Down status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_1": {
@@ -76,7 +76,7 @@
      "displayNameShort": "Wii 1",
      "description": "Wiimote button 1 status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_2": {
@@ -85,7 +85,7 @@
      "displayNameShort": "Wii 2",
      "description": "Wiimote button 2 status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_A": {
@@ -93,7 +93,7 @@
      "displayNameShort": "Wii A",
      "description": "Wiimote button A status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_B": {
@@ -101,7 +101,7 @@
      "displayNameShort": "Wii B",
      "description": "Wiimote button B status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_HOME": {
@@ -109,7 +109,7 @@
      "displayNameShort": "Wii Home",
      "description": "Wiimote button Home status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_MINUS": {
@@ -117,7 +117,7 @@
      "displayNameShort": "Wii Minus",
      "description": "Wiimote button Minus status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON_PLUS": {
@@ -125,7 +125,7 @@
      "displayNameShort": "Wii Plus",
      "description": "Wiimote button Plus status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    },
    "WIIMOTE_BUTTON": {
@@ -133,7 +133,7 @@
      "displayNameShort": "Wii Button",
      "description": "Wiimote buttons status",
      "unit": "number",
-     "defaultAggregate": "avg",
+     "defaultAggregate": "max",
      "defaultResolutionMS": 1000
    }
 }
