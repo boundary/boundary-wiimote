@@ -23,8 +23,7 @@
      "WIIMOTE_BUTTON_HOME",
      "WIIMOTE_BUTTON_MINUS",
      "WIIMOTE_BUTTON_PLUS",
-     "WIIMOTE_BUTTON",
-     "WIIMOTE_POSITION"
+     "WIIMOTE_BUTTON"
     ],
    "dashboards": [
       {
